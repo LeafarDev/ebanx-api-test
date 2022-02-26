@@ -3,13 +3,16 @@ import { Defs } from "../../utils/Defs";
 import { AccountService } from "./AccountService";
 import { Container } from "typedi";
 import { expressResponseMock } from "../../../test/__mocks__/Express";
+import { HttpError } from "routing-controllers";
 
 describe("AccountService", () => {
   const service = Container.get(AccountService);
   const spyFindOne = jest.spyOn(AccountRepository.prototype, "findOne");
+  const spyUpdate = jest.spyOn(AccountRepository.prototype, "update");
 
   beforeEach(() => {
     jest.clearAllMocks();
+    Defs.accounts = [];
   });
 
   describe("getBalance", () => {
@@ -56,6 +59,85 @@ describe("AccountService", () => {
       expect(spyReset).toBeCalledTimes(1);
       expect(expressResponseMock.status).toBeCalledWith(200);
       expect(expressResponseMock.json).toBeCalledWith("OK");
+    });
+  });
+
+  describe("increaseBalance", () => {
+    it("should increase balance correctly", () => {
+      const accountId = "963";
+      const initialBalance = 500;
+      const amountToIncrease = 200;
+      const expectedNewBalance = initialBalance + amountToIncrease;
+
+      Defs.accounts.push({
+        id: accountId,
+        balance: initialBalance
+      });
+
+      const result = service.increaseBalance(accountId, amountToIncrease);
+
+      expect(spyFindOne).toBeCalledWith(accountId);
+      expect(spyUpdate).toBeCalledWith(accountId, expectedNewBalance);
+      expect(result.id).toStrictEqual(accountId);
+      expect(result.balance).toStrictEqual(expectedNewBalance);
+    });
+
+    it("should fail when account does not exist", () => {
+      const accountId = "000";
+
+      expect(() => service.increaseBalance(accountId, 123)).toThrowError(
+        HttpError
+      );
+      expect(spyFindOne).toBeCalledWith(accountId);
+      expect(spyUpdate).toBeCalledTimes(0);
+    });
+  });
+
+  describe("decreaseBalance", () => {
+    it("should decrease balance correctly", () => {
+      const accountId = "142";
+      const initialBalance = 800;
+      const amountToDecrease = 200;
+      const expectedNewBalance = initialBalance - amountToDecrease;
+
+      Defs.accounts.push({
+        id: accountId,
+        balance: initialBalance
+      });
+
+      const result = service.decreaseBalance(accountId, amountToDecrease);
+
+      expect(spyFindOne).toBeCalledWith(accountId);
+      expect(spyUpdate).toBeCalledWith(accountId, expectedNewBalance);
+      expect(result.id).toStrictEqual(accountId);
+      expect(result.balance).toStrictEqual(expectedNewBalance);
+    });
+
+    it("should fail when account does not exist", () => {
+      const accountId = "000";
+
+      expect(() => service.decreaseBalance(accountId, 123)).toThrowError(
+        HttpError
+      );
+      expect(spyFindOne).toBeCalledWith(accountId);
+      expect(spyUpdate).toBeCalledTimes(0);
+    });
+
+    it("should fail when account does not have sufficient funds", () => {
+      const accountId = "144";
+      const initialBalance = 10;
+      const amountToDecrease = 200;
+
+      Defs.accounts.push({
+        id: accountId,
+        balance: initialBalance
+      });
+
+      expect(() =>
+        service.decreaseBalance(accountId, amountToDecrease)
+      ).toThrowError(HttpError);
+      expect(spyFindOne).toBeCalledWith(accountId);
+      expect(spyUpdate).toBeCalledTimes(0);
     });
   });
 });

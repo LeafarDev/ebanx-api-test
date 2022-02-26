@@ -1,4 +1,4 @@
-export interface IAccount {
+export interface IAccountDTO {
   id: string;
   balance: number;
 }

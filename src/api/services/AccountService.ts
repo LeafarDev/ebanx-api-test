@@ -1,6 +1,7 @@
 import { Inject, Service } from "typedi";
 import { AccountRepository } from "../repositories/AccountRepository";
 import { Response } from "express";
+import { HttpError } from "routing-controllers";
 
 @Service()
 export class AccountService {
@@ -25,5 +26,33 @@ export class AccountService {
   reset(resp: Response): Response {
     this.accountRepository.reset();
     return resp.status(200).json("OK");
+  }
+
+  increaseBalance(accountId: string, amount: number) {
+    const account = this.accountRepository.findOne(accountId);
+
+    if (!account) {
+      throw new HttpError(403, "Account does not exist");
+    }
+
+    const newBalance = account.balance + amount;
+
+    return this.accountRepository.update(accountId, newBalance);
+  }
+
+  decreaseBalance(accountId: string, amount: number) {
+    const account = this.accountRepository.findOne(accountId);
+
+    if (!account) {
+      throw new HttpError(403, "Account does not exist");
+    }
+
+    const newBalance = account.balance - amount;
+
+    if (newBalance < 0) {
+      throw new HttpError(403, "Insufficient funds");
+    }
+
+    return this.accountRepository.update(accountId, newBalance);
   }
 }

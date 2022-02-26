@@ -1,4 +1,4 @@
-import { IAccountDTO } from "../api/DTO/IAccountDTO";
+import {IAccountDTO} from "../api/DTO/types/IAccountDTO";
 
 export class Defs {
   static accounts: IAccountDTO[] = [

@@ -1,6 +1,6 @@
 import { Service } from "typedi";
-import { IAccountDTO } from "../DTO/IAccountDTO";
 import { Defs } from "../../utils/Defs";
+import {IAccountDTO} from "../DTO/types/IAccountDTO";
 
 @Service()
 export class AccountRepository {

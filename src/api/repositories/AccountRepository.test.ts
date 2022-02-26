@@ -6,6 +6,7 @@ describe("AccountRepository", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    Defs.accounts = [];
   });
 
   describe("findOne", () => {
