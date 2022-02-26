@@ -23,7 +23,7 @@
 ### Exemplos de uso:
 - Resetar as contas:
   - Requisição:
-    ```http request
+    ```bash
       curl --location --request POST 'localhost:3000/reset'
     ```
       
@@ -31,7 +31,7 @@
     ```OK```
 - Depositar em uma conta:
   - Requisição:
-    ```http request
+    ```bash
     curl --location --request POST 'localhost:3000/event' \
     --header 'Content-Type: application/json' \
     --data-raw '{
@@ -46,7 +46,7 @@
     ```
 - Visualizar Balanço:
   - Requisição:
-    ```http request
+    ```bash
     curl --location --request GET 'localhost:3000/balance?account_id=200' \
     --data-raw ''
     ```
@@ -54,7 +54,7 @@
     ```60```
 - Saque em uma conta:
   - Requisição
-    ```http request
+    ```bash
        curl --location --request POST 'localhost:3000/event' \
         --header 'Content-Type: application/json' \
         --data-raw '{
@@ -70,7 +70,7 @@
     ```
 - Transferência entre contas:
   - Requisição:
-    ```http request
+    ```bash
     curl --location --request POST 'localhost:3000/event' \
     --header 'Content-Type: application/json' \
     --data-raw '{
