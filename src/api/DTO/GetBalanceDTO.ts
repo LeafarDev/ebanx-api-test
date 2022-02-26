@@ -4,9 +4,9 @@ import { IsNotEmpty, IsNumberString } from "class-validator";
 export class GetBalanceDTO implements IGetBalance {
   @IsNotEmpty()
   @IsNumberString({ no_symbols: true })
-  readonly accountId: string;
+  readonly account_id: string;
 
   constructor(accountId: string) {
-    this.accountId = accountId;
+    this.account_id = accountId;
   }
 }

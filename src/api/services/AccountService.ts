@@ -25,7 +25,7 @@ export class AccountService {
 
   reset(resp: Response): Response {
     this.accountRepository.reset();
-    return resp.status(200).json("OK");
+    return resp.status(200).send("OK");
   }
 
   increaseBalance(accountId: string, amount: number) {

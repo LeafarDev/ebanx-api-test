@@ -15,7 +15,7 @@ describe("AccountController", () => {
       controller.getBalance(balanceRequest, expressResponseMock);
 
       expect(spyGetBalance).toBeCalledWith(
-        balanceRequest.accountId,
+        balanceRequest.account_id,
         expressResponseMock
       );
     });

@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { Defs } from "../../utils/Defs";
-import {IAccountDTO} from "../DTO/types/IAccountDTO";
+import { IAccountDTO } from "../DTO/types/IAccountDTO";
 
 @Service()
 export class AccountRepository {
@@ -40,10 +40,6 @@ export class AccountRepository {
       {
         id: "300",
         balance: 0
-      },
-      {
-        id: "200",
-        balance: 10
       }
     ];
   }

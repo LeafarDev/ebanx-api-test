@@ -1,3 +1,3 @@
 export interface IGetBalance {
-  accountId: string;
+  account_id: string;
 }

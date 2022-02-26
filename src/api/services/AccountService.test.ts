@@ -58,7 +58,7 @@ describe("AccountService", () => {
 
       expect(spyReset).toBeCalledTimes(1);
       expect(expressResponseMock.status).toBeCalledWith(200);
-      expect(expressResponseMock.json).toBeCalledWith("OK");
+      expect(expressResponseMock.send).toBeCalledWith("OK");
     });
   });
 

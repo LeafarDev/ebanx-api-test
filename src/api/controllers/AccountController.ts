@@ -20,7 +20,7 @@ export class AccountController {
 
   @Get("/balance")
   getBalance(@QueryParams() query: GetBalanceDTO, @Res() resp: Response) {
-    return this.accountService.getBalance(query.accountId, resp);
+    return this.accountService.getBalance(query.account_id, resp);
   }
 
   @Post("/reset")
