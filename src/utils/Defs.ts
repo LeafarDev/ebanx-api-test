@@ -1,7 +1,7 @@
 import { IAccountDTO } from "../api/DTO/IAccountDTO";
 
 export class Defs {
-  public static accounts: IAccountDTO[] = [
+  static accounts: IAccountDTO[] = [
     {
       id: "300",
       balance: 0

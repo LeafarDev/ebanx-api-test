@@ -4,11 +4,11 @@ import { Defs } from "../../utils/Defs";
 
 @Service()
 export class AccountRepository {
-  public findOne(id: string): IAccountDTO | undefined {
+  findOne(id: string): IAccountDTO | undefined {
     return Defs.accounts.find((account) => account.id === id);
   }
 
-  public create(accountId: string, balance: number) {
+  create(accountId: string, balance: number) {
     const newAccount = {
       id: accountId,
       balance: balance
@@ -19,7 +19,7 @@ export class AccountRepository {
     return newAccount;
   }
 
-  public update(accountId: string, balance: number): IAccountDTO {
+  update(accountId: string, balance: number): IAccountDTO {
     const accounts = Defs.accounts.filter(
       (account) => account.id !== accountId
     );
@@ -33,5 +33,18 @@ export class AccountRepository {
     Defs.accounts = accounts;
 
     return updatedAccount;
+  }
+
+  reset() {
+    Defs.accounts = [
+      {
+        id: "300",
+        balance: 0
+      },
+      {
+        id: "200",
+        balance: 10
+      }
+    ];
   }
 }
